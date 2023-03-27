@@ -22,4 +22,18 @@ public class CategoryService {
                 .first();
         return category;
     }
+
+    public java.util.List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    public void deleteCategory(ObjectId id) {
+        categoryRepository.deleteById(id);
+    }
+
+    public void updateCategory(ObjectId id, String name) {
+        Category category = categoryRepository.findById(id).get();
+        category.setName(name);
+        categoryRepository.save(category);
+    }
 }
