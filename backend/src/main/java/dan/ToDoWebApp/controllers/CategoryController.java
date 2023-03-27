@@ -41,5 +41,10 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body("Category updated with ID: " + id);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategory(@PathVariable ObjectId id) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getCategory(id));
+    }
+
 }
 

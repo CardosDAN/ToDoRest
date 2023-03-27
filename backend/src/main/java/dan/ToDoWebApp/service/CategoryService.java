@@ -36,4 +36,8 @@ public class CategoryService {
         category.setName(name);
         categoryRepository.save(category);
     }
+
+    public Category getCategory(ObjectId id) {
+        return categoryRepository.findById(id).get();
+    }
 }
