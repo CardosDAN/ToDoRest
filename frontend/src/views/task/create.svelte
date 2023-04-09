@@ -8,6 +8,7 @@
         description: '',
         dueDate: '',
         category: '',
+        categoryId: '',
     };
 
     let categories = [];
@@ -22,6 +23,7 @@
             },
             body: JSON.stringify(task),
         });
+        console.log('Request body:', JSON.stringify(task));
 
         if (response.ok) {
             console.log('Task added successfully!');
@@ -31,6 +33,7 @@
                 description: '',
                 dueDate: '',
                 category: '',
+                categoryId: '' // reset categoryId property to empty string
             };
         } else {
             console.error('Error adding task:', response.statusText);
@@ -68,7 +71,7 @@
         </div>
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
-            <select class="form-control" id="category" bind:value={task.category}>
+            <select class="form-control" id="category" bind:value={task.categoryId}>
                 {#each categories as category}
                     <option value={category.id}>{category.name}</option>
                 {/each}
@@ -81,4 +84,3 @@
         <button type="submit" class="btn btn-primary">Add Task</button>
     </form>
 </Container>
-

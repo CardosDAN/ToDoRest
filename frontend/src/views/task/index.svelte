@@ -1,5 +1,6 @@
 <script>
     import axios from 'axios';
+    import { Link } from 'svelte-routing';
     import {
         Card,
         Col,
@@ -18,25 +19,32 @@
     let dueDate = null;
 
     async function fetchDueDateFromDatabase(taskId) {
-        const response = await fetch(`http://localhost:8080/api/tasks/dueDate/${taskId}`);
+        const response = await fetch(`http://localhost:8080/api/tasks/${taskId}/dueDate`);
         const data = await response.json();
         dueDate = new Date(data.dueDate);
     }
 
     onMount(async () => {
-        const dueDate = await fetchDueDateFromDatabase();
-        const startDate = new Date();
-        const totalTime = dueDate - startDate;
-
-        const intervalId = setInterval(() => {
+        for (let i = 0; i < task.length; i++) {
+            await fetchDueDateFromDatabase(task[i].id);
             const timeRemaining = dueDate - new Date();
             if (timeRemaining <= 0) {
-                clearInterval(intervalId);
                 progress = 100;
             } else {
-                progress = (totalTime - timeRemaining) / totalTime * 100;
+                const startDate = new Date();
+                const totalTime = dueDate - startDate;
+
+                const intervalId = setInterval(() => {
+                    const timeRemaining = dueDate - new Date();
+                    if (timeRemaining <= 0) {
+                        clearInterval(intervalId);
+                        progress = 100;
+                    } else {
+                        progress = (totalTime - timeRemaining) / totalTime * 100;
+                    }
+                }, 1000);
             }
-        }, 1000);
+        }
     });
 
     async function index() {
@@ -46,7 +54,6 @@
 
     index();
 </script>
-
 <main>
     <Container class="mt-5 mb-3">
         <Row>
@@ -60,15 +67,20 @@
                                     <i class="fa fa-ellipsis-v"></i>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem>View</DropdownItem>
+                                    <DropdownItem>
+                                        <Link to="/task/{task.id}">View</Link>
+                                    </DropdownItem>
                                     <DropdownItem divider/>
-                                    <DropdownItem>Edit</DropdownItem>
+                                    <DropdownItem>
+                                        <Link to="/task/edit/{task.id}">Edit</Link>
+                                    </DropdownItem>
                                     <DropdownItem divider/>
                                     <DropdownItem>Delete</DropdownItem>
                                 </DropdownMenu>
                             </ButtonDropdown>
                         </div>
                         <div class="mt-5">
+                            <div hidden="hidden">{fetchDueDateFromDatabase(task.id)}</div>
                             <h3 class="heading">{task.title}</h3>
                             <div class="mt-5">
                                 <div class="progress">

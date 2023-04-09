@@ -2,7 +2,6 @@ package dan.ToDoWebApp.controllers;
 
 import dan.ToDoWebApp.model.Category;
 import dan.ToDoWebApp.service.CategoryService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<String> addCategory(@RequestBody Map<String, String> payload) {
-        ObjectId id = new ObjectId(payload.get("_id"));
+        String id = payload.get("id");
         Category category = categoryService.createCategory(payload.get("name"), id);
         return ResponseEntity.status(HttpStatus.CREATED).body("Category added with ID: " + category.getId());
     }
@@ -31,19 +30,19 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable ObjectId id) {
+    public ResponseEntity<String> deleteCategory(@PathVariable String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.status(HttpStatus.OK).body("Category deleted with ID: " + id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCategory(@PathVariable ObjectId id, @RequestBody Map<String, String> payload) {
+    public ResponseEntity<String> updateCategory(@PathVariable String id, @RequestBody Map<String, String> payload) {
         categoryService.updateCategory(id, payload.get("name"));
         return ResponseEntity.status(HttpStatus.OK).body("Category updated with ID: " + id);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable ObjectId id) {
+    public ResponseEntity<Category> getCategory(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.getCategory(id));
     }
 

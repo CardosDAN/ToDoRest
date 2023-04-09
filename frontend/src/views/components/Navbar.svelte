@@ -37,7 +37,9 @@
                     <NavLink href="#components/">Components</NavLink>
                 </NavItem>
                 <NavItem>
-                    <Link to="/task/create">Add Task</Link>
+                    <NavLink>
+                        <Link to="/task/create">Add Task</Link>
+                    </NavLink>
                 </NavItem>
                 <Dropdown nav inNavbar>
                     <DropdownToggle nav caret>Options</DropdownToggle>
