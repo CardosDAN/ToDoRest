@@ -6,15 +6,21 @@
     let task = {
         title: '',
         description: '',
-        dueDate: '',
+        duedate: '',
+        priority: '',
         category: '',
-        categoryId: '',
     };
 
     let categories = [];
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        const selectedCategory = categories.find(c => c.id === parseInt(task.category));
+        task.category = {
+            id: selectedCategory.id,
+            name: selectedCategory.name,
+        };
 
         const response = await fetch('http://localhost:8080/api/tasks', {
             method: 'POST',
@@ -31,9 +37,9 @@
             task = {
                 title: '',
                 description: '',
-                dueDate: '',
+                duedate: '',
+                priority: '',
                 category: '',
-                categoryId: '' // reset categoryId property to empty string
             };
         } else {
             console.error('Error adding task:', response.statusText);
@@ -67,14 +73,22 @@
         </div>
         <div class="mb-3">
             <label for="dueDate" class="form-label">Due Date</label>
-            <input type="date" class="form-control" id="dueDate" bind:value={task.dueDate}>
+            <input type="datetime-local" class="form-control" id="dueDate" bind:value={task.duedate}>
         </div>
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
-            <select class="form-control" id="category" bind:value={task.categoryId}>
+            <select class="form-control" id="category" bind:value={task.category}>
                 {#each categories as category}
                     <option value={category.id}>{category.name}</option>
                 {/each}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-control" id="priority" bind:value={task.priority}>
+                <option value="1">Low</option>
+                <option value="5">Medium</option>
+                <option value="10">High</option>
             </select>
         </div>
         <div class="mb-3">

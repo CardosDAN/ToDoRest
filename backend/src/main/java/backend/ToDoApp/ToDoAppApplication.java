@@ -1,13 +1,13 @@
-package dan.ToDoWebApp;
+package backend.ToDoApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ToDoWebAppApplication {
+public class ToDoAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ToDoWebAppApplication.class, args);
+		SpringApplication.run(ToDoAppApplication.class, args);
 	}
 
 }

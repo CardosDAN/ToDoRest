@@ -1,10 +1,10 @@
-package dan.ToDoWebApp;
+package backend.ToDoApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ToDoWebAppApplicationTests {
+class ToDoAppApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -16,36 +16,49 @@
     let task = [];
     let progress = 0;
 
-    let dueDate = null;
+    async function deleteTask(id) {
+        const response = await fetch(`http://localhost:8080/api/tasks/delete/${id}`, {
+            method: 'DELETE'
+        });
 
-    async function fetchDueDateFromDatabase(taskId) {
-        const response = await fetch(`http://localhost:8080/api/tasks/${taskId}/dueDate`);
-        const data = await response.json();
-        dueDate = new Date(data.dueDate);
+        if (response.ok) {
+            console.log('Task deleted');
+            location.reload();
+        } else {
+            console.error('Error deleting task:', response.statusText);
+        }
     }
 
-    onMount(async () => {
-        for (let i = 0; i < task.length; i++) {
-            await fetchDueDateFromDatabase(task[i].id);
-            const timeRemaining = dueDate - new Date();
-            if (timeRemaining <= 0) {
-                progress = 100;
-            } else {
-                const startDate = new Date();
-                const totalTime = dueDate - startDate;
-
-                const intervalId = setInterval(() => {
-                    const timeRemaining = dueDate - new Date();
-                    if (timeRemaining <= 0) {
-                        clearInterval(intervalId);
-                        progress = 100;
-                    } else {
-                        progress = (totalTime - timeRemaining) / totalTime * 100;
-                    }
-                }, 1000);
-            }
-        }
-    });
+    // let dueDate = null;
+    //
+    // async function fetchDueDateFromDatabase(taskId) {
+    //     const response = await fetch(`http://localhost:8080/api/tasks/${taskId}/dueDate`);
+    //     const data = await response.json();
+    //     dueDate = new Date(data.dueDate);
+    // }
+    //
+    // onMount(async () => {
+    //     for (let i = 0; i < task.length; i++) {
+    //         await fetchDueDateFromDatabase(task[i].id);
+    //         const timeRemaining = dueDate - new Date();
+    //         if (timeRemaining <= 0) {
+    //             progress = 100;
+    //         } else {
+    //             const startDate = new Date();
+    //             const totalTime = dueDate - startDate;
+    //
+    //             const intervalId = setInterval(() => {
+    //                 const timeRemaining = dueDate - new Date();
+    //                 if (timeRemaining <= 0) {
+    //                     clearInterval(intervalId);
+    //                     progress = 100;
+    //                 } else {
+    //                     progress = (totalTime - timeRemaining) / totalTime * 100;
+    //                 }
+    //             }, 1000);
+    //         }
+    //     }
+    // });
 
     async function index() {
         const response = await axios.get('http://localhost:8080/api/tasks');
@@ -75,13 +88,16 @@
                                         <Link to="/task/edit/{task.id}">Edit</Link>
                                     </DropdownItem>
                                     <DropdownItem divider/>
-                                    <DropdownItem>Delete</DropdownItem>
+                                    <DropdownItem>
+                                        <button on:click={() => deleteTask(task.id)}>Delete</button>
+                                    </DropdownItem>
                                 </DropdownMenu>
                             </ButtonDropdown>
                         </div>
                         <div class="mt-5">
-                            <div hidden="hidden">{fetchDueDateFromDatabase(task.id)}</div>
+<!--                            <div hidden="hidden">{fetchDueDateFromDatabase(task.id)}</div>-->
                             <h3 class="heading">{task.title}</h3>
+                            <h3 class="heading">{task.category.id}</h3>
                             <div class="mt-5">
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style={`width: ${progress}%`} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
