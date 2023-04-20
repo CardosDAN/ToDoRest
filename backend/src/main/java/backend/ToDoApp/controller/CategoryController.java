@@ -21,8 +21,8 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.listAll());
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<Category> getCategoryById(Integer id) throws CategoryNotFoundException {
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable("id") Integer id) throws CategoryNotFoundException {
         return ResponseEntity.ok(categoryService.get(id));
     }
 
@@ -32,15 +32,17 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @PutMapping
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category) throws CategoryNotFoundException {
-        categoryService.updateCategory(category.getId(), category);
+    @PutMapping("edit/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") Integer id) throws CategoryNotFoundException {
+        Category category = categoryService.get(id);
+        categoryService.updateCategory(id, category);
         return ResponseEntity.ok(category);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Category> deleteCategory(@RequestBody Category category) throws CategoryNotFoundException {
-        categoryService.delete(category.getId());
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) throws CategoryNotFoundException {
+        Category category = categoryService.get(id);
+        categoryService.delete(id);
         return ResponseEntity.ok(category);
     }
 }
