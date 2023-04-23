@@ -44,7 +44,9 @@
                 <Dropdown nav inNavbar>
                     <DropdownToggle nav caret>Options</DropdownToggle>
                     <DropdownMenu end>
-                        <DropdownItem>Option 1</DropdownItem>
+                        <DropdownItem>
+                            <Link to="/category">Category</Link>
+                        </DropdownItem>
                         <DropdownItem>Option 2</DropdownItem>
                         <DropdownItem divider/>
                         <DropdownItem>Reset</DropdownItem>

@@ -33,14 +33,19 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-    @PutMapping("edit/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable("id") Integer id) throws TaskNotFoundException {
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable("id") Integer id, @RequestBody Task updatedTask) throws TaskNotFoundException {
         Task task = taskService.get(id);
+        task.setTitle(updatedTask.getTitle());
+        task.setDescription(updatedTask.getDescription());
+        task.setDuedate(updatedTask.getDuedate());
+        task.setPriority(updatedTask.getPriority());
+        task.setCategory(updatedTask.getCategory());
         taskService.updateTask(id, task);
         return ResponseEntity.ok(task);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Task> deleteTask(@PathVariable("id") Integer id) throws TaskNotFoundException {
         Task task = taskService.get(id);
         taskService.delete(id);
