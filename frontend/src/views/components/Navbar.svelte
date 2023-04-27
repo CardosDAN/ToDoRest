@@ -47,7 +47,9 @@
                         <DropdownItem>
                             <Link to="/category">Category</Link>
                         </DropdownItem>
-                        <DropdownItem>Option 2</DropdownItem>
+                        <DropdownItem>
+                            <Link to="/user">Users</Link>
+                        </DropdownItem>
                         <DropdownItem divider/>
                         <DropdownItem>Reset</DropdownItem>
                     </DropdownMenu>

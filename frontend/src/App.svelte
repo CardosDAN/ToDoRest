@@ -9,6 +9,10 @@
     import IndexCategoory from './views/category/index.svelte'
     import CreateCategory from './views/category/create.svelte'
     import EditCategory from './views/category/edit.svelte'
+
+    import IndexUser from './views/user/index.svelte'
+    import CreateUser from './views/user/create.svelte'
+    import EditUser from './views/user/edit.svelte'
 </script>
 
 <Router>
@@ -24,4 +28,7 @@
     <Route path="/category/create" component={CreateCategory} />
     <Route path="/category/edit/:id" component={EditCategory} />
 
+    <Route path="/user" component={IndexUser} />
+    <Route path="/user/create" component={CreateUser} />
+    <Route path="/user/edit/:id" component={EditUser} />
 </Router>

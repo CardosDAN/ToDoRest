@@ -12,7 +12,6 @@
         DropdownMenu,
         DropdownToggle,
     } from "sveltestrap";
-    import { onMount } from 'svelte';
     let task = [];
     let progress = 0;
 

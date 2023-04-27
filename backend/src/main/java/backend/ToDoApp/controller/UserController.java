@@ -33,9 +33,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping("edit/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Integer id) throws UserNotFoundException {
+   @PutMapping("/edit/{id}")
+   public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody User updatedUser) throws UserNotFoundException {
         User user = userService.get(id);
+        user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
         userService.update(id, user);
         return ResponseEntity.ok(user);
     }
