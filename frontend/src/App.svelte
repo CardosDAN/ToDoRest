@@ -13,12 +13,15 @@
     import IndexUser from './views/user/index.svelte'
     import CreateUser from './views/user/create.svelte'
     import EditUser from './views/user/edit.svelte'
+
+    import Login from './views/auth/login.svelte'
 </script>
 
 <Router>
     <Route path="/">
-        <NavBar />
-        <IndexTask />
+        <Login />
+<!--        <NavBar />-->
+<!--        <IndexTask />-->
     </Route>
     <Route path="/task/:id" component={ShowTask} />
     <Route path="/task/edit/:id" component={TaskEdit} />

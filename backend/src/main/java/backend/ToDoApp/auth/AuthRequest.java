@@ -1,10 +1,11 @@
 package backend.ToDoApp.auth;
 
-public class LoginRequest {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
-    private String email;
-    private String password;
+import org.hibernate.validator.constraints.Length;
 
+public class AuthRequest {
     public String getEmail() {
         return email;
     }
@@ -20,4 +21,12 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @NotNull @Email @Length(min = 5, max = 50)
+    private String email;
+
+    @NotNull @Length(min = 5, max = 10)
+    private String password;
+
+
 }

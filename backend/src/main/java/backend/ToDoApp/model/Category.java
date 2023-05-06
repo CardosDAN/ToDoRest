@@ -1,8 +1,7 @@
 package backend.ToDoApp.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "categories")
 public class Category {
