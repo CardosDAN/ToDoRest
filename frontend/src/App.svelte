@@ -1,5 +1,6 @@
 <script>
     import { Router, Route } from 'svelte-routing'
+
     import NavBar from './views/components/Navbar.svelte'
     import CreateTask from './views/task/create.svelte'
     import IndexTask from './views/task/index.svelte'
@@ -19,13 +20,14 @@
 
 <Router>
     <Route path="/">
-        <Login />
-<!--        <NavBar />-->
+    <Login />
+    <NavBar />
 <!--        <IndexTask />-->
     </Route>
     <Route path="/task/:id" component={ShowTask} />
     <Route path="/task/edit/:id" component={TaskEdit} />
     <Route path="/task/create" component={CreateTask} />
+    <Route path="/task" component={IndexTask} />
 
     <Route path="/category" component={IndexCategoory} />
     <Route path="/category/create" component={CreateCategory} />
@@ -34,4 +36,6 @@
     <Route path="/user" component={IndexUser} />
     <Route path="/user/create" component={CreateUser} />
     <Route path="/user/edit/:id" component={EditUser} />
+
+    <Route path="/login" component={Login} />
 </Router>

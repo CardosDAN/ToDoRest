@@ -25,11 +25,14 @@
     "bootstrap": "^5.2.3",
     "flowbite-svelte": "^0.34.3",
     "mongoose": "^7.0.3",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
     "sirv-cli": "^2.0.0",
     "svelte": "^3.58.0",
     "svelte-icons": "^2.1.0",
     "svelte-navigator": "^3.2.2",
     "svelte-routing": "^1.6.0",
+    "svelte-spa-router": "^3.3.0",
     "sveltestrap": "^5.10.0",
     "three": "^0.151.2"
   }

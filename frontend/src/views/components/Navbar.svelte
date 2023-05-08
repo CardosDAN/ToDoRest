@@ -34,7 +34,9 @@
         <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
             <Nav class="ms-auto" navbar>
                 <NavItem>
-                    <NavLink href="#components/">Components</NavLink>
+                    <NavLink >
+                        <Link to="/login">Login</Link>
+                    </NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink>
@@ -49,6 +51,9 @@
                         </DropdownItem>
                         <DropdownItem>
                             <Link to="/user">Users</Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to="/task">Tasks</Link>
                         </DropdownItem>
                         <DropdownItem divider/>
                         <DropdownItem>Reset</DropdownItem>

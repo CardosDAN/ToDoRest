@@ -14,11 +14,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 
 
-
+@CrossOrigin
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
@@ -29,6 +31,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+//        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+//        response.setHeader("Access-Control-Max-Age", "3600");
+//        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization");
         if (!hasAuthorizationBearer(request)) {
             filterChain.doFilter(request, response);
             return;
@@ -48,7 +55,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         setAuthenticationContext(token, request);
         filterChain.doFilter(request, response);
+
     }
+
+    @Bean
+    public FilterRegistrationBean<HttpProxyMiddleware> httpProxyMiddleware() {
+        FilterRegistrationBean<HttpProxyMiddleware> registrationBean = new FilterRegistrationBean<>();
+
+        registrationBean.setFilter(new HttpProxyMiddleware());
+        registrationBean.addUrlPatterns("/*");
+
+        return registrationBean;
+    }
+
 
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");

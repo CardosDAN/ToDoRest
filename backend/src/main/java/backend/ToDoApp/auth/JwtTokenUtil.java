@@ -20,8 +20,10 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
+@CrossOrigin
 @Component
 public class JwtTokenUtil {
     private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000; // 24 hour

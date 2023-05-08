@@ -3,10 +3,14 @@ package backend.ToDoApp.auth;
 import javax.servlet.http.HttpServletResponse;
 
 import backend.ToDoApp.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
+import org.springframework.core.Ordered;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,9 +19,11 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Configuration
 @EnableWebSecurity(debug = true)
+@CrossOrigin
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired private UserRepository userRepo;
@@ -36,6 +42,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         };
     }
 
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -50,10 +58,11 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/api/auth/login").permitAll()
                 .anyRequest().authenticated();
 
         http.exceptionHandling()
@@ -68,4 +77,5 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 }

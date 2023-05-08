@@ -1,5 +1,8 @@
 package backend.ToDoApp.auth;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin
 public class AuthResponse {
     public String getEmail() {
         return email;

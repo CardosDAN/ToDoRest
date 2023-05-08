@@ -4,7 +4,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin
 public class AuthRequest {
     public String getEmail() {
         return email;

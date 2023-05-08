@@ -9,12 +9,16 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+
+
 @RestController
 public class AuthApi {
+
     @Autowired AuthenticationManager authManager;
     @Autowired JwtTokenUtil jwtUtil;
 
-    @PostMapping("/auth/login")
+    @CrossOrigin(origins = "*")
+    @PostMapping("/api/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {
             Authentication authentication = authManager.authenticate(
