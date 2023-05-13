@@ -5,29 +5,46 @@ import javax.servlet.http.HttpServletResponse;
 import backend.ToDoApp.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
-import org.springframework.core.Ordered;
+
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+
+@ComponentScan(basePackages = {"backend.ToDoApp"})
 @Configuration
 @EnableWebSecurity(debug = true)
-@CrossOrigin
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired private UserRepository userRepo;
     @Autowired private JwtTokenFilter jwtTokenFilter;
+
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        return request -> {
+            var cors = new org.springframework.web.cors.CorsConfiguration();
+            cors.setAllowCredentials(true);
+            cors.addAllowedOrigin("http://localhost:5000");
+            cors.addAllowedHeader("*");
+            cors.addAllowedMethod("*");
+            return cors;
+        };
+    }
+
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -55,14 +72,15 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         return authConfig.getAuthenticationManager();
     }
 
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 .anyRequest().authenticated();
 
         http.exceptionHandling()

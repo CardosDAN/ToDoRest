@@ -18,7 +18,7 @@ public class AuthApi {
     @Autowired JwtTokenUtil jwtUtil;
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/api/auth/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {
             Authentication authentication = authManager.authenticate(

@@ -58,16 +58,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     }
 
-    @Bean
-    public FilterRegistrationBean<HttpProxyMiddleware> httpProxyMiddleware() {
-        FilterRegistrationBean<HttpProxyMiddleware> registrationBean = new FilterRegistrationBean<>();
-
-        registrationBean.setFilter(new HttpProxyMiddleware());
-        registrationBean.addUrlPatterns("/*");
-
-        return registrationBean;
-    }
-
 
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
