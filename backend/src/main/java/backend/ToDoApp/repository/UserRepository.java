@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
     Long countById(Integer id);
-    Optional<User> findByEmail(String email);
+    User findByUsername(String username);
 }

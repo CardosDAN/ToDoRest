@@ -37,7 +37,6 @@ public class UserController {
    public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody User updatedUser) throws UserNotFoundException {
         User user = userService.get(id);
         user.setUsername(updatedUser.getUsername());
-        user.setEmail(updatedUser.getEmail());
         user.setPassword(updatedUser.getPassword());
         userService.update(id, user);
         return ResponseEntity.ok(user);

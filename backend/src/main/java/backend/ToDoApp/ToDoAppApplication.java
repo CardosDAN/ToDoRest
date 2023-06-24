@@ -2,6 +2,8 @@ package backend.ToDoApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,6 +31,13 @@ public class ToDoAppApplication {
 //		http.cors();
 //		return http.build();
 //	}
+
+    @Bean
+    public ServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.addContextCustomizers(context -> context.setUseHttpOnly(false));
+        return factory;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(ToDoAppApplication.class, args);
